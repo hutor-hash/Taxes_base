@@ -2,30 +2,22 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <cstring>
 
+struct account {
+	int log;
+	int password;
+};
 
 void create_plist() {
-	std::string text;
-	std::vector<int> logs(1);
-	std::ifstream names("names_sub.txt");
-	char lettersb[52] = { 'q','w','e','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m','Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M' };
-	srand(time(0));
-	int rando = rand() % 20;
-	std::cout << rando;
-	for (int i = 0; i < 21; ++i) {
-		getline(names, text);
-		if (i == rando) {
-			std::cout << text;
-		}
-		for (int i = 0; i < text.length(); ++i) {
-			int zerc = text.length() - 11;
-
-			for (int i = 0; i < zerc; ++i)
-			{
-				logpass[i] = 0;
-				std::cout << logpass[i];
-			}
-		}
-	}
-
+	account a;
+	std::cin>>a.log;
+	std::cout << "\n";
+	std::cin >> a.password;
+	std::ofstream outfile("ipass.bin", std::ios::binary);
+	if (!outfile)
+		std::cout << "cannot opne file\n";
+	outfile.write(reinterpret_cast<char*>(&p), sizeof(account));
+	outfile.close();
+	std::cout<<"\nnice"
 }

@@ -6,7 +6,8 @@
 
 int main() {
 	std::string prog = "1";
-	//std::ofstream logp("ipass.txt");
+	std::ofstream logp1("ipass.txt");            //file reader
+	while(logp1)
 	int logp = 001, pass = 231, attempts=3, info=34; //instead of numbers attach txt files
 	int login, paswd, acces = 0;
 	std::cout << "What do you want today?\nType login to acces you account and check taxes\nType exit to shut down program\n";
@@ -33,7 +34,7 @@ int main() {
 			}
 			else
 			{
-				std::cout << "There is no such user in data base, or you make a mistake in login.\nTry again";
+				std::cout << "There is no such user in data base, or you make a mistake in login.\nTry again\n";
 				std::cin >> login;
 			}
 			//system("cls");
