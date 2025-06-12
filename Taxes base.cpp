@@ -8,13 +8,47 @@
 #include <cstdlib>
 #include <ctime>
 
-struct account {
+class account {
+private:
 	std::string log;
 	std::string password;
-	std::string taxes;
-
-	account() : log(""), password(""), taxes("0") {}
+public:
+	std::string income;
+	std::string home;
+	std::string age;
+	void account_info() {
+		std::cout << "\nYour taxes dependened on your income and home location.\n";
+		//write acc info
+	}
 };
+
+class pl : public account {
+public:
+	std::string income_taxes;
+	std::string estate_taxes;
+	void calculate_tpl() {
+		double incomepl = std::stod(income);
+		double estatepl = std::stod(home);
+		if (std::stod(age) > 26) {
+			if (incomepl < 120000) {
+				income_taxes = std::to_string(incomepl * 0.12) + "PLN"; //12% tax for income below 120000
+			}
+			else {
+				income_taxes = std::to_string(incomepl * 0.32) + "PLN"; //32% tax for income above 120000
+			}
+			estate_taxes = std::to_string(estatepl * 1.18) + "PLN"; //calculates HOME square meters taxes
+		}
+		else {
+			income_taxes = "0 PLN";
+			estate_taxes = "0 PLN"; //if user is below 26 years old, he doesn't pay taxes
+		}
+	}
+	void pl_info() {
+		std::cout << "You'r now in Poland\nYour income is: " << income << "\nYour income taxes: "<<income_taxes<<"\nYour esatate taxes: "<<estate_taxes;
+		
+	}
+};
+
 
 int main() {
 	srand(time(0));
@@ -22,11 +56,11 @@ int main() {
 	int exit = 0;
 	while (exit == 0) {
 		std::string prog = "1";
-		int attempts = 3; //instead of numbers attach txt files
+		int attempts = 3;
 		std::string login, paswd;
 		int acces = 0;
 		std::cout << "What do you want today?\nType login to acces you account and check taxes\nType exit to shut down program\nType create to create an account\n";
-		std::cin >> prog;                 //stting prog wiil be the main control word
+		std::cin >> prog;                 //setting prog wiil be the main control word
 		system("cls");
 		int accnumer;
 		if (prog == "login") {
@@ -35,19 +69,16 @@ int main() {
 			while (attempts > 0) {
 				int accnumb;
 				std::ifstream counter("accs/counter.txt");
-				counter >> accnumb;
+				counter >> accnumb; //reading number of accounts from file
 				counter.close();
-				for (int i = 0; i <= accnumb; ++i) {
-					std::string mainnam = "user.bin";
-					std::string way = "accs/";
+				std::string mainnam = "user.bin";
+				std::string way = "accs/";
+				account a;
+				for (int i = 0; i <= accnumb; i++) {
 					std::string filenam = way + std::to_string(i) + mainnam; //constructing file name
-					std::ifstream accheck(filenam, std::ios::binary); //opening file
-					if (!accheck) {
-						std::cout << "cannot open file\n";
-						system("cls");
-						continue; //if file not found, continue to next iteration
-					};
-					account a;
+					
+					std::ifstream accheck(filenam, std::ios::binary); //opening file for reading
+					
 					accheck.read(reinterpret_cast<char*>(&a), sizeof(account));
 					if (a.log == login) {
 						std::cout << "Enter password: ";
@@ -75,7 +106,9 @@ int main() {
 							Sleep(2000);
 							system("cls");
 						}
+						
 					}
+					accheck.close();
 				}
 			}
 		}
@@ -168,3 +201,4 @@ int main() {
 }
 
 // ошибка компиляции кода после логина исправь!
+// полиморфизм относительно зарплат и налогов к ним и остальных галогов, кто человек, кем работает, возраст, 
