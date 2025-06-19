@@ -4,7 +4,6 @@
 #include <vector>                 //necesary bibliotecas
 #include <cstdlib>
 #include <windows.h>
-#include <gtest/gtest.h>
 
 class account {                                         //main class
 protected: 
@@ -128,26 +127,4 @@ int main() {
         }
     }
     return 0;
-}
-TEST(AccountTest, InputData) {  
-   account* test_account = new pl(); // Создаем объект класса pl или ua  
-   test_account->input_data();  
-   EXPECT_EQ("0", test_account->get_login()); // Используем метод get_login() для проверки  
-   delete test_account;  
-}
-TEST(PLTests, CalculateTaxesTest) {
-    pl user;
-    user.input_data();
-    user.calculate_taxes();
-    EXPECT_EQ(user.income_taxes, "14400 PLN"); // Пример проверки
-}
-TEST(UATests, CalculateTaxesTest) {
-    ua user;
-    user.input_data();
-    user.calculate_taxes();
-    EXPECT_EQ(user.income_taxes, "1800 UAH"); // Пример проверки
-}
-int main(int argc, char** argv) {
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
 }
